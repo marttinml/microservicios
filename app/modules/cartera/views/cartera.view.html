@@ -15,7 +15,7 @@
 				</b>
 			</div>
 			<div class="wrapper-item" ng-repeat="item in cartera.grupos" ng-class="{'to-detail': item.toDetail}" id="iditem{{$index}}">
-				<div class="item-row" ng-click="toggleDetail(item, 'iditem' + $index)">
+				<div class="item-row" ng-click="showDetail(item, 'iditem' + $index)">
 					<div class="item-col width-40 padding-lr-20">
 						<i class="item-ico" ng-class="item.icon"></i>
 					</div>

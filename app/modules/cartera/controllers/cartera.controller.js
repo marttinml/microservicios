@@ -1,35 +1,35 @@
 /*global angular*/
 (function () {
 
-    var controller = function ($scope, $rootScope, $routeParams) {
+    var controller = function ($scope, $rootScope, $routeParams, $compile) {
 
         // $scope.toDetail = false;
         // $scope.detail = {};
-        $scope.toggleDetail = function(obj, id){
-            var element = document.getElementById(id);
-            var elementCloned =  element.cloneNode(true);
-
-            console.log(elementCloned);
+        $scope.showDetail = function(obj, id){
             
-            elementCloned.classList.add('wrapper-item-cloned');
+                obj.toDetail =  true;
+                var element = document.getElementById(id);
+                var elementCloned =  element.cloneNode(true);
+                elementCloned.classList.add('wrapper-item-cloned');
+                elementCloned.setAttribute('id', id + 'cloned');
+                elementCloned.removeAttribute('ng-repeat');
+                elementCloned.childNodes[1].setAttribute('ng-click','hideDetail("'+id+'cloned'+'")');
+                elementCloned.style.top = (element.offsetTop - 10) + 'px';
 
-            elementCloned.style.top = (element.offsetTop - 10) + 'px';
-
-            document.getElementById("contentItems").appendChild(elementCloned)
-
-            setTimeout(() => {
-                elementCloned.classList.add('transition');
-            }, 100);
-
-
-            obj.toDetail = obj.toDetail === true ? false: true;
-            if(obj.toDetail){
+                var linkFn = $compile(angular.element(elementCloned));
+                var content = linkFn($scope);
+                var elementContent = angular.element(document.getElementById("contentItems")).append(content);
                 
+                // Animation
+                setTimeout(() => {
+                    elementCloned.classList.add('transition');
+                }, 100);
 
-            }else{
-                
+                console.log('In');
+        };
 
-            }
+        $scope.hideDetail = function(id){
+            console.log(id);
         };
 
        $scope.cartera = {
@@ -140,7 +140,7 @@
     };
 
     };
-    controller.$inject = ['$scope','$rootScope','$routeParams'];
+    controller.$inject = ['$scope','$rootScope','$routeParams', '$compile'];
     angular.module('app').controller('CarteraController', controller);
 
 })();
