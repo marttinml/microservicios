@@ -31,14 +31,29 @@
 				</div>
 				<div class="alert-detail">
 					<hr>
+					
+					<div class="tabs">
+						<div ng-if="item.ilimitado">
+							<i class="icon"></i>
+							<h3>Descripción</h3>
+							<h3>Ilimitados</h3>
+						</div>
+						<div ng-if="item.limitado">
+							<i class="icon"></i>
+							<h3>Descripción</h3>
+							<h3>Limitados</h3>
+						</div>
+					</div>
+
 				</div>
 			</div>
 
 			<div class="item-row-empty">
-					<div class="item-col">Tu próxima asignación será en:</div> 
-					<div class="item-col t-right"><b>25 días</b></div>
-				</div>
-		<hr>
+				<div class="item-col">Tu próxima asignación será en:</div> 
+				<div class="item-col t-right"><b>25 días</b></div>
+			</div>
+
+			<hr>
 	
 			<div class="item-row-empty">
 				<b class="c-gray">

@@ -5,31 +5,36 @@
 
         // $scope.toDetail = false;
         // $scope.detail = {};
-        $scope.showDetail = function(obj, id){
+        $scope.showDetail = function(item, id){
+
+            $scope.item = item;
+            var element = document.getElementById(id);
+            var elementCloned =  element.cloneNode(true);
+            elementCloned.classList.add('wrapper-item-cloned');
+            elementCloned.setAttribute('id', id + 'cloned');
+            elementCloned.removeAttribute('ng-repeat');
+            elementCloned.childNodes[1].setAttribute('ng-click','hideDetail("'+id+'cloned'+'", '+element.offsetTop+')');
+            elementCloned.style.top = (element.offsetTop - 10) + 'px';
+
+            var linkFn = $compile(angular.element(elementCloned));
+            var content = linkFn($scope);
+            var elementContent = angular.element(document.getElementById("contentItems")).append(content);
             
-                obj.toDetail =  true;
-                var element = document.getElementById(id);
-                var elementCloned =  element.cloneNode(true);
-                elementCloned.classList.add('wrapper-item-cloned');
-                elementCloned.setAttribute('id', id + 'cloned');
-                elementCloned.removeAttribute('ng-repeat');
-                elementCloned.childNodes[1].setAttribute('ng-click','hideDetail("'+id+'cloned'+'")');
-                elementCloned.style.top = (element.offsetTop - 10) + 'px';
+            // Animation
+            setTimeout(() => {
+                elementCloned.classList.add('transition');
+            }, 100);
 
-                var linkFn = $compile(angular.element(elementCloned));
-                var content = linkFn($scope);
-                var elementContent = angular.element(document.getElementById("contentItems")).append(content);
-                
-                // Animation
-                setTimeout(() => {
-                    elementCloned.classList.add('transition');
-                }, 100);
-
-                console.log('In');
         };
 
-        $scope.hideDetail = function(id){
-            console.log(id);
+        $scope.hideDetail = function(id, top){
+            var el = document.getElementById(id);
+            el.classList.remove('transition');
+            $scope.item = {};
+
+            setTimeout(() => {
+                el.remove();
+            }, 300);
         };
 
        $scope.cartera = {
@@ -118,7 +123,7 @@
             "icon": "att-caller-history-slim",
             "nombre": "Llamadas",
             "disponible": "Ilimitadas",
-            "illimitado": {
+            "ilimitado": {
                 "incluido": "Ilimitado",
                 "consumido": "42 min",
                 "descripcion": "Saldo otorgado al realizar una recarga que sirve para adquirir cualquier servicio durante la vigencia de la recarga",

@@ -234,7 +234,6 @@ hr{
 
 .alert-detail{
 	top:0px;
-	padding-top:56px;
 	left: 10px;
 	right: 10px;
 	position: absolute;
@@ -242,6 +241,7 @@ hr{
 	background-color: rgb(255,255,255);
 	z-index: 5;
 	padding: 13px;
+	padding-top:69px;
 	visibility: hidden;
 	box-shadow: 0 2px 0 rgb(224,224,224);
 	border-radius: 5px;
@@ -268,4 +268,8 @@ hr{
 .wrapper-item-cloned .item-row{
 	z-index: 6;
 	box-shadow: none;
+}
+
+.tabs{
+	height: 70px;
 }
