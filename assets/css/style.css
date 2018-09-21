@@ -102,6 +102,15 @@ h2{
 	text-rendering: optimizeLegibility !important;
 	-webkit-font-smoothing: antialiased !important;
 }
+h3{
+	font-family: ATTAleckSans_Md, sans-serif;
+	font-weight: normal;
+	font-size: 14px;
+margin: 0;
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+	text-rendering: optimizeLegibility !important;
+	-webkit-font-smoothing: antialiased !important;
+}
 
 hr{
 	height: 1px;
@@ -246,12 +255,15 @@ hr{
 	box-shadow: 0 2px 0 rgb(224,224,224);
 	border-radius: 5px;
 	transition: .3s;
+	overflow: hidden;
+	opacity: 0;
 }
 .wrapper-item-cloned.transition .alert-detail{ 
 	height: calc(100vh - 200px);
 	transition: .3s;
 	visibility: visible;
 	transition: .3s;
+	opacity: 1;
 }
 
 
@@ -272,4 +284,22 @@ hr{
 
 .tabs{
 	height: 70px;
+	display: table;
+	width: 100%;
+}
+.tabs > div{
+	display: table-cell;
+	text-align: center;
+}
+.tabs.col-0 > div{
+
+}
+.tabs.col-1 > div{
+	width: 100%;
+}
+.tabs.col-2 > div{
+	width: 50%;
+}
+.tabs.col-3 > div{
+	width: 33.3%;
 }

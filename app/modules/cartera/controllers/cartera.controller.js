@@ -37,6 +37,14 @@
             }, 300);
         };
 
+        $scope.getColums = function(obj){
+            var col = 0;
+            col += obj.limitado ? 1 : 0;
+            col += obj.ilimitado ? 1 : 0;
+            col += obj.bolsas ? 1 : 0;
+            return 'col-' + col;
+        };
+
        $scope.cartera = {
         "color":"yellow",
         "titulo":"CARTERA",
