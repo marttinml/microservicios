@@ -27,11 +27,39 @@
 
         };
 
+        $scope.showConsumos = function(id){
+            var element = document.getElementById(id);
+            var elementCloned =  element.cloneNode(true);
+            elementCloned.classList.add('wrapper-item-cloned');
+            elementCloned.setAttribute('id', id + 'cloned');
+            elementCloned.childNodes[1].setAttribute('ng-click','hideConsumos("'+id+'cloned'+'", '+element.offsetTop+')');
+            elementCloned.style.top = (element.offsetTop - 10) + 'px';
+
+            var linkFn = $compile(angular.element(elementCloned));
+            var content = linkFn($scope);
+            var elementContent = angular.element(document.getElementById("contentItems")).append(content);
+            
+            // Animation
+            setTimeout(() => {
+                elementCloned.classList.add('transition');
+            }, 100);
+
+        };
+
         $scope.hideDetail = function(id, top){
             var el = document.getElementById(id);
             el.classList.remove('transition');
-            $scope.item = {};
+        
+            setTimeout(() => {
+                $scope.item = {};
+                el.remove();
+            }, 300);
+        };
 
+        $scope.hideConsumos = function(id, top){
+            var el = document.getElementById(id);
+            el.classList.remove('transition');
+        
             setTimeout(() => {
                 el.remove();
             }, 300);
@@ -42,7 +70,16 @@
             col += obj.limitado ? 1 : 0;
             col += obj.ilimitado ? 1 : 0;
             col += obj.bolsas ? 1 : 0;
+            col += obj.saldo ? 1 : 0;
+            col += obj.beneficios ? 1 : 0;
+            col += obj.monedas ? 1 : 0;
             return 'col-' + col;
+        };
+
+        $scope.resetTabs = function(tabs){
+            for(var i in tabs){
+                tabs[i] = false;
+            }
         };
 
        $scope.cartera = {
@@ -51,7 +88,30 @@
         "career":"UNEFON",
         "fechaCorte": "07 de Octubre",
         "proximaAsignacion": "27 días",
-        "grupos": [{
+        "grupos": [
+            {
+                "icon": "att-money-slim",
+                "nombre": "Saldo Total",
+                "disponible": "$220",
+                "saldo": {
+                    "saldo": "$20",
+                    "descripcion": "Saldo otorgado al realizar una recarga que sirve para adquirir cualquier servicio durante la vigencia de la recarga",
+                },
+                "beneficios": {
+                    "saldo": "$200",
+                    "descripcion": "Saldo otorgado al realizar una recarga que sirve para adquirir cualquier servicio durante la vigencia de la recarga",
+                }
+            },
+            {
+                "icon": "att-a-slim",
+                "nombre": "Monedas",
+                "disponible": "$0",
+                "monedas": {
+                    "saldo": "$0",
+                    "descripcion": "Saldo otorgado al realizar una recarga que sirve para adquirir cualquier servicio durante la vigencia de la recarga",
+                }
+            },
+            {
             "icon": "att-internet-slim",
             "nombre": "Internet",
             "disponible": "6 GB",
@@ -108,9 +168,9 @@
             "icon": "att-messaging-slim",
             "nombre": "Mensajes",
             "disponible": "Ilimitado",
-            "limitado": {
+            "ilimitado": {
                 "incluido": "Ilimitado",
-                "consumido": "42 Mensajes",
+                "consumido": "42 SMS",
                 "descripcion": "Saldo otorgado al realizar una recarga que sirve para adquirir cualquier servicio durante la vigencia de la recarga",
             },
             "bolsas":[{
@@ -151,6 +211,37 @@
             ]
         }]
     };
+
+    for(var i in $scope.cartera.grupos){
+        var obj = $scope.cartera.grupos[i];
+        obj.tabs = { limitado: false, illimitado: false, bolsas: false, saldo: false, beneficios: false, monedas: false  };
+
+        if(obj.ilimitado){
+            obj.tabs.ilimitado = true;
+        }else{
+            if(obj.limitado){
+                obj.tabs.limitado = true;
+            }else{
+                if(obj.bolsas){
+                    obj.tabs.bolsas = true;
+                }else{
+                    if(obj.saldo){
+                        obj.tabs.saldo = true;
+                    }else{
+                        if(obj.beneficios){
+                            obj.tabs.beneficios = true;
+                        }else{
+                            if(obj.monedas){
+                                obj.tabs.monedas = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+    console.log($scope.cartera);
 
     };
     controller.$inject = ['$scope','$rootScope','$routeParams', '$compile'];
