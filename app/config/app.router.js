@@ -6,11 +6,24 @@
         
         var baseUrl = 'app/modules/';
 
-        // Home
+        // cartera
         $routeProvider.when('/cartera', {
             templateUrl: baseUrl + 'cartera/views/cartera.view.html',
             controller: 'CarteraController'
         });
+         // passcode
+         $routeProvider.when('/passcode', {
+            templateUrl: baseUrl + 'passcode/views/passcode.view.html',
+            controller: 'PasscodeController'
+        });
+        // passcode
+        $routeProvider.when('/recuperar-passcode', {
+            templateUrl: baseUrl + 'recuperar-passcode/views/recuperar-passcode.view.html',
+            controller: 'RecuperarPasscodeController'
+        });
+
+
+        
 
         // http
         $routeProvider.when('/http', {
